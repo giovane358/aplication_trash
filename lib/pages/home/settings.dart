@@ -8,6 +8,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  var _valueSwitch = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -93,6 +94,45 @@ class _SettingsPageState extends State<SettingsPage> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(5),
                   border: Border.all(width: 0.3, color: Colors.black),
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      height: size.height * 0.04,
+                      decoration: BoxDecoration(
+                          color: Colors.amber, border: Border.all(width: 0.2)),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Icon(Icons.message_outlined),
+                          Text('Idioma'),
+                          Icon(Icons.arrow_forward_ios),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding:
+                          const EdgeInsets.only(top: 5, left: 10, right: 10),
+                      height: size.height * 0.04,
+                      decoration: const BoxDecoration(color: Colors.amber),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          const Icon(Icons.notifications_active),
+                          const Text('Notificações'),
+                          Switch(
+                            value: _valueSwitch,
+                            onChanged: (bool value) {
+                              setState(() {
+                                _valueSwitch = value;
+                              });
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
