@@ -1,4 +1,5 @@
 import 'package:application_lixo/data/controller/controller_login.dart';
+import 'package:application_lixo/pages/forgot_password.dart';
 import 'package:application_lixo/pages/home.dart';
 import 'package:application_lixo/pages/register.dart';
 import 'package:flutter/material.dart';
@@ -86,14 +87,22 @@ class _LoginPageState extends State<LoginPage> {
                     return null;
                   }),
             ),
-            const Text(
-              'Esquceu a senha?',
-              textScaleFactor: 1.2,
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontStyle: FontStyle.italic,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ForgotPassword()));
+              },
+              child: const Text(
+                'Esquceu a senha?',
+                textScaleFactor: 1.2,
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontStyle: FontStyle.italic,
+                ),
+                textAlign: TextAlign.left,
               ),
-              textAlign: TextAlign.left,
             ),
             ButtomContainer(
               child: GestureDetector(
