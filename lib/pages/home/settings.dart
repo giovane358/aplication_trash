@@ -98,10 +98,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 1, horizontal: 0),
                       height: size.height * 0.04,
                       decoration: BoxDecoration(
-                          color: Colors.amber, border: Border.all(width: 0.2)),
+                          color: Colors.white, border: Border.all(width: 0.2)),
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -115,7 +117,8 @@ class _SettingsPageState extends State<SettingsPage> {
                       padding:
                           const EdgeInsets.only(top: 5, left: 10, right: 10),
                       height: size.height * 0.04,
-                      decoration: const BoxDecoration(color: Colors.amber),
+                      decoration: BoxDecoration(
+                          color: Colors.white, border: Border.all(width: 0.2)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
