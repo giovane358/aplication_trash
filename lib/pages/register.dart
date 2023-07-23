@@ -1,5 +1,6 @@
 import 'package:application_lixo/data/widget/login_register.dart';
 import 'package:application_lixo/pages/login.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'home.dart';
@@ -18,46 +19,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final password = TextEditingController();
   final cPassword = TextEditingController();
   final auth = FirebaseAuth.instance;
-
-  void register() async {
-    try {
-      auth
-          .createUserWithEmailAndPassword(
-            email: email.text,
-            password: password.text,
-          )
-          .then((user) => Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const HomePage(),
-                ),
-              ));
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('A senha fornecida é muito fraca.'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      } else if (e.code == 'email-already-in-use') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('A conta já existe para esse e-mail.'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    }
-  }
-
+  final db = FirebaseFirestore.instance;
   bool _resul = true;
-
-  void _visibility() {
-    setState(() {
-      _resul = false;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +54,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     border: InputBorder.none,
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Esse campo é obrigatorio';
+                    }
+                    return null;
+                  },
                 ),
               ),
               TextFiledContainer(
@@ -108,21 +77,14 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     border: InputBorder.none,
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Esse campo é obrigatorio';
+                    }
+                    return null;
+                  },
                 ),
               ),
-              /*TextFiledContainer(
-                child: TextFormField(
-                  keyboardType: TextInputType.datetime,
-                  decoration: const InputDecoration(
-                    label: Text('Data de Nasc'),
-                    icon: Icon(
-                      Icons.calendar_month,
-                      color: Colors.green,
-                    ),
-                    border: InputBorder.none,
-                  ),
-                ),
-              ),*/
               TextFiledContainer(
                 child: TextFormField(
                   obscureText: _resul,
@@ -148,6 +110,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     border: InputBorder.none,
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Esse campo é obrigatorio';
+                    }
+                    return null;
+                  },
                 ),
               ),
               TextFiledContainer(
@@ -175,12 +143,23 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     border: InputBorder.none,
                   ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Esse campo é obrigatorio';
+                    }
+                    if (value != password.text) {
+                      return 'As senhas não coincidem';
+                    }
+                    return null;
+                  },
                 ),
               ),
               ButtomContainer(
                 child: GestureDetector(
                   onTap: () {
-                    register();
+                    if (_fromKey.currentState!.validate()) {
+                      register();
+                    }
                   },
                   child: const Text(
                     'Registra-se',
@@ -235,5 +214,46 @@ class _RegisterPageState extends State<RegisterPage> {
             ]),
       ),
     );
+  }
+
+  void register() async {
+    try {
+      final userCredential = await auth.createUserWithEmailAndPassword(
+        email: email.text,
+        password: password.text,
+      );
+      User? user = userCredential.user;
+      db.collection('user').doc(user?.uid).set({
+        'ID': user!.uid,
+        'Name': name.text,
+      }).then((user) => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomePage(),
+            ),
+          ));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('A senha fornecida é muito fraca.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      } else if (e.code == 'email-already-in-use') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('A conta já existe para esse e-mail.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  void _visibility() {
+    setState(() {
+      _resul = false;
+    });
   }
 }
