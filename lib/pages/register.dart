@@ -34,12 +34,20 @@ class _RegisterPageState extends State<RegisterPage> {
               ));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('A senha fornecida é muito fraca.'),
+            backgroundColor: Colors.red,
+          ),
+        );
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('A conta já existe para esse e-mail.'),
+            backgroundColor: Colors.red,
+          ),
+        );
       }
-    } catch (e) {
-      print(e);
     }
   }
 

@@ -40,9 +40,19 @@ class _LoginPageState extends State<LoginPage> {
               ));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Nenhum usuário encontrado para esse e-mail.'),
+            backgroundColor: Colors.red,
+          ),
+        );
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Senha incorreta.'),
+            backgroundColor: Colors.red,
+          ),
+        );
       }
     }
   }

@@ -186,6 +186,8 @@ class _SettingsPageState extends State<SettingsPage> {
               builder: (context) => const LoginPage(),
             ),
           ));
-    } catch (e) {}
+    } on FirebaseAuthException catch (e) {
+      if (e.code == '') {}
+    }
   }
 }
