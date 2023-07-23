@@ -1,9 +1,8 @@
 import 'package:application_lixo/data/widget/login_register.dart';
 import 'package:application_lixo/pages/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
-import '../data/controller/controller.dart';
+import 'home.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -14,7 +13,36 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final _fromKey = GlobalKey<FormState>();
-  final controller = Get.put(ControllerRegister());
+  final name = TextEditingController();
+  final email = TextEditingController();
+  final password = TextEditingController();
+  final cPassword = TextEditingController();
+  final auth = FirebaseAuth.instance;
+
+  void register() async {
+    try {
+      auth
+          .createUserWithEmailAndPassword(
+            email: email.text,
+            password: password.text,
+          )
+          .then((user) => Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HomePage(),
+                ),
+              ));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   bool _resul = true;
 
   void _visibility() {
@@ -43,7 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
               TextFiledContainer(
                 child: TextFormField(
                   keyboardType: TextInputType.name,
-                  controller: controller.name,
+                  controller: name,
                   decoration: const InputDecoration(
                     label: Text(
                       "Nome Completo",
@@ -60,7 +88,7 @@ class _RegisterPageState extends State<RegisterPage> {
               TextFiledContainer(
                 child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
-                  controller: controller.email,
+                  controller: email,
                   decoration: const InputDecoration(
                     label: Text(
                       'Email',
@@ -91,7 +119,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: TextFormField(
                   obscureText: _resul,
                   keyboardType: TextInputType.visiblePassword,
-                  controller: controller.password,
+                  controller: password,
                   decoration: InputDecoration(
                     label: const Text(
                       'Senha',
@@ -118,7 +146,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: TextFormField(
                   obscureText: _resul,
                   keyboardType: TextInputType.visiblePassword,
-                  controller: controller.cPassword,
+                  controller: cPassword,
                   decoration: InputDecoration(
                     label: const Text(
                       'Confirma a Senha',
@@ -144,7 +172,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ButtomContainer(
                 child: GestureDetector(
                   onTap: () {
-                    controller.register();
+                    register();
                   },
                   child: const Text(
                     'Registra-se',

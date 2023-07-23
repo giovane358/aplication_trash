@@ -1,10 +1,9 @@
 import 'package:application_lixo/pages/forgot_password.dart';
 import 'package:application_lixo/pages/register.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
-import '../data/controller/controller.dart';
 import '../data/widget/login_register.dart';
+import 'home.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,13 +14,37 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _fromKey = GlobalKey<FormState>();
-  final controller = Get.put(ControllerLogin());
+  final auth = FirebaseAuth.instance;
+  var email = TextEditingController();
+  var password = TextEditingController();
   bool _resul = true;
 
   void _visibility() {
     setState(() {
       _resul = false;
     });
+  }
+
+  login() async {
+    try {
+      await auth
+          .signInWithEmailAndPassword(
+            email: email.text,
+            password: password.text,
+          )
+          .then((user) => Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HomePage(),
+                ),
+              ));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
   }
 
   @override
@@ -43,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             TextFiledContainer(
               child: TextFormField(
-                controller: controller.email,
+                controller: email,
                 decoration: const InputDecoration(
                     label: Text('Email'),
                     labelStyle: TextStyle(color: Colors.black),
@@ -60,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             TextFiledContainer(
               child: TextFormField(
-                  controller: controller.password,
+                  controller: password,
                   obscureText: _resul,
                   decoration: InputDecoration(
                     label: const Text('Senha'),
@@ -108,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
               child: GestureDetector(
                 onTap: () {
                   if (_fromKey.currentState!.validate()) {
-                    controller.login();
+                    login();
                   }
                 },
                 child: const Text(

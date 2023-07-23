@@ -1,3 +1,5 @@
+import 'package:application_lixo/pages/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -9,6 +11,8 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   var _valueSwitch = false;
+  final auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -139,9 +143,49 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Container(
+                height: size.height * 0.1,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(width: 0.3, color: Colors.black),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    GestureDetector(
+                      child: const Text(
+                        'Versão: 00.0.2',
+                        textAlign: TextAlign.right,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        signout();
+                      },
+                      child: const Text('Sair'),
+                    )
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  void signout() async {
+    try {
+      await auth.signOut().then((user) => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const LoginPage(),
+            ),
+          ));
+    } catch (e) {}
   }
 }
