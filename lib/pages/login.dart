@@ -61,6 +61,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             TextFiledContainer(
               child: TextFormField(
+                  controller: controller.password,
                   obscureText: _resul,
                   decoration: InputDecoration(
                     label: const Text('Senha'),
@@ -107,12 +108,9 @@ class _LoginPageState extends State<LoginPage> {
             ButtomContainer(
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomePage(),
-                    ),
-                  );
+                  if (_fromKey.currentState!.validate()) {
+                    controller.login();
+                  }
                 },
                 child: const Text(
                   'Login',

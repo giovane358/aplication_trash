@@ -142,6 +142,9 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               ButtomContainer(
                 child: GestureDetector(
+                  onTap: () {
+                    controller.register();
+                  },
                   child: const Text(
                     'Registra-se',
                     textAlign: TextAlign.center,
