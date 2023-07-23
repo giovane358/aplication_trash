@@ -1,4 +1,4 @@
-import 'package:application_lixo/pages/login.dart';
+import 'package:application_lixo/data/controller/check_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: CheckAuth(),
     );
   }
 }
