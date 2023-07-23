@@ -1,10 +1,9 @@
-import 'package:application_lixo/data/controller/controller_login.dart';
 import 'package:application_lixo/pages/forgot_password.dart';
-import 'package:application_lixo/pages/home.dart';
 import 'package:application_lixo/pages/register.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../data/controller/controller.dart';
 import '../data/widget/login_register.dart';
 
 class LoginPage extends StatefulWidget {

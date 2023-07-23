@@ -1,8 +1,9 @@
-import 'package:application_lixo/data/controller/controller_register.dart';
 import 'package:application_lixo/data/widget/login_register.dart';
 import 'package:application_lixo/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../data/controller/controller.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
