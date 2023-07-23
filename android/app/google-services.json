@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "243167542129",
+    "project_id": "api---trash",
+    "storage_bucket": "api---trash.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:243167542129:android:cb62e879cfd468b73a54d0",
+        "android_client_info": {
+          "package_name": "com.example.application_lixo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "243167542129-bcgk2q139d6smjtvrpfijr34hdhnjuf5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYLDUysd_LHodlVrgHTJfF2VMKQL2zFXg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "243167542129-bcgk2q139d6smjtvrpfijr34hdhnjuf5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

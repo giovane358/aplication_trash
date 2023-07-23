@@ -51,12 +51,28 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     ),
                   ),
                   ButtomContainer(
-                      child: GestureDetector(
-                    child: const Text(
-                      'Enviar',
-                      textAlign: TextAlign.center,
+                    child: GestureDetector(
+                      child: const Text(
+                        'Enviar',
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  ))
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('Não tenho conta?'),
+                        GestureDetector(
+                          child: const Text(
+                            'Registra-se',
+                            style: TextStyle(color: Colors.green),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
