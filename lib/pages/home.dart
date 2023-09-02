@@ -33,13 +33,13 @@ class _HomePageState extends State<HomePage> {
         children: screen,
       ),
       bottomNavigationBar: SlidingClippedNavBar(
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.green,
         onButtonPressed: (index) {
           setState(() {
             selectedIndex = index;
           });
           page.animateToPage(selectedIndex,
-              duration: const Duration(milliseconds: 400),
+              duration: const Duration(milliseconds: 200),
               curve: Curves.easeOutQuad);
         },
         iconSize: 30,
