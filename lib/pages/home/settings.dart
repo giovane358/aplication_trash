@@ -25,7 +25,7 @@ class _SettingsPageState extends State<SettingsPage> {
             child: const Row(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: 5),
+                  padding: EdgeInsets.only(left: 15),
                   child: CircleAvatar(
                     maxRadius: 40,
                     backgroundColor: Colors.black,
