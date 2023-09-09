@@ -21,7 +21,7 @@ class _SettingsPageState extends State<SettingsPage> {
           Container(
             width: double.infinity,
             height: size.height * 0.2,
-            decoration: const BoxDecoration(color: Colors.green),
+            decoration: const BoxDecoration(color: Colors.red),
             child: const Row(
               children: [
                 Padding(
